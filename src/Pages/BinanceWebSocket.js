@@ -6,13 +6,11 @@ import { CategoryScale } from 'chart.js';
 
 Chart.register(CategoryScale);
 
-// Function to load initial chart data from localStorage
 const loadInitialChartData = (coin) => {
   const savedData = localStorage.getItem(`chartData-${coin}`);
   return savedData ? JSON.parse(savedData) : {};
 };
 
-// Save chart data to localStorage
 const saveToLocalStorage = (coin, data) => {
   localStorage.setItem(`chartData-${coin}`, JSON.stringify(data[coin]));
 };
@@ -31,7 +29,6 @@ const BinanceWebSocket = () => {
 
   const timeframes = ['1m', '3m', '5m'];
 
-  // Connect to WebSocket for Binance Market Data
   const connectToWebSocket = () => {
     const url = `wss://stream.binance.com:9443/ws/${selectedCoin}@kline_${timeframe}`;
     socketRef.current = new WebSocket(url);
@@ -54,35 +51,10 @@ const BinanceWebSocket = () => {
       };
 
       setChartData(updatedChartData);
-      saveToLocalStorage(selectedCoin, updatedChartData); // Save to localStorage
+      saveToLocalStorage(selectedCoin, updatedChartData); 
     };
   };
-  // const connectToWebSocket = () => {
-  //   const url = `wss://stream.binance.com:9443/ws/${selectedCoin}@kline_${timeframe}`;
-  //   socketRef.current = new WebSocket(url);
 
-  //   socketRef.current.onmessage = (event) => {
-  //     const data = JSON.parse(event.data);
-  //     const time = candlestick.t;
-  //     const open = parseFloat(candlestick.o);
-  //     const close = parseFloat(candlestick.c);
-  //     const high = parseFloat(candlestick.h);
-  //     const low = parseFloat(candlestick.l);
-
-  //     const updatedChartData = {
-  //       ...chartData,
-  //       [selectedCoin]: [
-  //         ...(chartData[selectedCoin] || []),
-  //         { time },
-  //       ],
-  //     };
-
-  //     setChartData(updatedChartData);
-  //     saveToLocalStorage(selectedCoin, updatedChartData); // Save to localStorage
-  //   };
-  // };
-
-  // Reconnect WebSocket when selectedCoin or timeframe changes
   useEffect(() => {
     const savedData = loadInitialChartData(selectedCoin);
     if (savedData[selectedCoin]) {
@@ -106,7 +78,6 @@ const BinanceWebSocket = () => {
     setTimeframe(e.target.value);
   };
 
-  // Chart configuration
   const chartOptions = {
     scales: {
       x: {
@@ -132,19 +103,6 @@ const BinanceWebSocket = () => {
         tension: 0.1,
       },
     ],
-    // datasets: [
-    //   {
-    //     label: `${selectedCoin.toUpperCase()} - ${timeframe}`,
-    //     data: chartValues,
-    //     fill: true,
-    //     borderColor: 'rgba(75,192,192,1)',
-    //     tension: 0.1,
-    //   },
-    // ],
-
-
-
-
   };
 
   return (
