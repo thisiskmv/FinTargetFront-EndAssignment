@@ -141,6 +141,10 @@ const BinanceWebSocket = () => {
     //     tension: 0.1,
     //   },
     // ],
+
+
+
+
   };
 
   return (
@@ -159,7 +163,6 @@ const BinanceWebSocket = () => {
         ))}
       </div>
 
-      {/* Timeframe Selection */}
       <div className="timeframe-group">
         <label>Select Timeframe: </label>
         <select value={timeframe} onChange={handleTimeframeChange}>
@@ -171,7 +174,6 @@ const BinanceWebSocket = () => {
         </select>
       </div>
 
-      {/* Chart */}
       <div className="chart-container">
         <Line data={data} options={chartOptions} />
       </div>
